@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "669604377516-rj6laia67qb5315jiednp9rppvfuqsi5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.selopetading.sams_liquor_admin",
+            "certificate_hash": "8a11302a9bccae6fcadbd648519d3c9b7aaa7a85"
+          }
+        },
+        {
           "client_id": "669604377516-lhftrc5d0corea0brdq9lnpppf19g7i3.apps.googleusercontent.com",
           "client_type": 3
         }
