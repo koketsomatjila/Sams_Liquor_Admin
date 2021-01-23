@@ -4,8 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
-// import 'package:sams_liqour/Pages/Home.dart';
-// import 'package:sams_liqour/Pages/Sign%20Up.dart';
+import 'Sign Up.dart';
+
 import 'package:sams_liquor_admin/Screens/Admin.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -213,34 +213,34 @@ class _LogInState extends State<LogIn> {
                           ),
                         ),
                       ),
-                      // Row(
-                      //   children: [
-                      //     Padding(
-                      //       padding: EdgeInsets.only(left: 62),
-                      //       child: Text("Don't have an account?",
-                      //           style: TextStyle(
-                      //               fontWeight: FontWeight.bold,
-                      //               color: Colors.white)),
-                      //     ),
-                      //     InkWell(
-                      //       onTap: () {
-                      //         Navigator.push(
-                      //           context,
-                      //           MaterialPageRoute(
-                      //             builder: (context) => SignUp(),
-                      //           ),
-                      //         );
-                      //       },
-                      //       child: Text(
-                      //         ' Click here to sign up',
-                      //         style: TextStyle(
-                      //           color: Colors.blue,
-                      //           fontWeight: FontWeight.bold,
-                      //         ),
-                      //       ),
-                      //     ),
-                      //   ],
-                      // ),
+                      Row(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(left: 62),
+                            child: Text("Don't have an account?",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white)),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => SignUp(),
+                                ),
+                              );
+                            },
+                            child: Text(
+                              ' Click here to sign up',
+                              style: TextStyle(
+                                color: Colors.blue,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
 
                       Divider(),
 
@@ -250,13 +250,6 @@ class _LogInState extends State<LogIn> {
                         child: Container(
                             alignment: Alignment.bottomCenter,
                             child: _signInButton()),
-                      ),
-                      Padding(
-                        padding:
-                            const EdgeInsets.only(left: 8, right: 8, top: 8.0),
-                        child: Container(
-                            alignment: Alignment.bottomCenter,
-                            child: _facebookSignInButton()),
                       ),
                     ],
                   ),
@@ -299,49 +292,6 @@ class _LogInState extends State<LogIn> {
               padding: const EdgeInsets.only(left: 10),
               child: Text(
                 'Sign in with Google',
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.white,
-                ),
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _facebookSignInButton() {
-    return FlatButton(
-      minWidth: MediaQuery.of(context).size.width,
-      color: Colors.red[900],
-      splashColor: Colors.grey,
-      onPressed: () {
-        // TODO
-        // signInWithGoogle().then((result) {
-        //   if (result != null) {
-        //     Navigator.of(context).push(
-        //       MaterialPageRoute(
-        //         builder: (context) {
-        //           return HomePage();
-        //         },
-        //       ),
-        //     );
-        //   }
-        // });
-      },
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(14, 10, 14, 10),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Image(image: AssetImage("images/facebook.png"), height: 25.0),
-            Padding(
-              padding: const EdgeInsets.only(left: 10),
-              child: Text(
-                'Sign in with Facebook',
                 style: TextStyle(
                   fontSize: 20,
                   color: Colors.white,
