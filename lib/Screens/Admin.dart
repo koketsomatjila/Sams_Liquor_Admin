@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
+import 'package:sams_liquor_admin/Provider/User%20Provider.dart';
 import 'package:sams_liquor_admin/Screens/Add%20Products.dart';
 import '../Database/Category.dart';
 
@@ -21,6 +23,7 @@ class _AdminState extends State<Admin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Colors.grey.withOpacity(0.8),
         appBar: AppBar(
           title: Row(
             children: <Widget>[
@@ -56,25 +59,22 @@ class _AdminState extends State<Admin> {
   }
 
   Widget _loadScreen() {
+    final user = Provider.of<UserProvider>(context);
     switch (_selectedPage) {
       case Page.dashboard:
         return Column(
           children: <Widget>[
-            ListTile(
-              subtitle: FlatButton.icon(
-                onPressed: null,
-                icon: Icon(
-                  Icons.attach_money,
-                  size: 30.0,
-                  color: Colors.green,
-                ),
-                label: Text('12,000',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 30.0, color: Colors.green)),
-              ),
-              title: Text(
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 8, 40, 4),
+              child: Text(
                 'Revenue',
-                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 24.0, color: Colors.grey),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                'R 45 100',
                 style: TextStyle(fontSize: 24.0, color: Colors.grey),
               ),
             ),
@@ -86,6 +86,7 @@ class _AdminState extends State<Admin> {
                   Padding(
                     padding: const EdgeInsets.all(18.0),
                     child: Card(
+                      elevation: 30,
                       child: ListTile(
                           title: FlatButton.icon(
                               onPressed: null,
@@ -99,28 +100,14 @@ class _AdminState extends State<Admin> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(18.0),
-                    child: Card(
-                      child: ListTile(
-                          title: FlatButton.icon(
-                              onPressed: null,
-                              icon: Icon(Icons.category),
-                              label: Text("Categories")),
-                          subtitle: Text(
-                            '23',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(color: active, fontSize: 60.0),
-                          )),
-                    ),
-                  ),
-                  Padding(
                     padding: const EdgeInsets.all(22.0),
                     child: Card(
+                      elevation: 30,
                       child: ListTile(
                           title: FlatButton.icon(
                               onPressed: null,
-                              icon: Icon(Icons.track_changes),
-                              label: Text("Producs")),
+                              icon: Icon(Icons.stacked_bar_chart),
+                              label: Text("Stock")),
                           subtitle: Text(
                             '120',
                             textAlign: TextAlign.center,
@@ -131,11 +118,12 @@ class _AdminState extends State<Admin> {
                   Padding(
                     padding: const EdgeInsets.all(22.0),
                     child: Card(
+                      elevation: 30,
                       child: ListTile(
                           title: FlatButton.icon(
                               onPressed: null,
-                              icon: Icon(Icons.tag_faces),
-                              label: Text("Sold")),
+                              icon: Icon(Icons.attach_money),
+                              label: Text("Sales")),
                           subtitle: Text(
                             '13',
                             textAlign: TextAlign.center,
@@ -146,6 +134,7 @@ class _AdminState extends State<Admin> {
                   Padding(
                     padding: const EdgeInsets.all(22.0),
                     child: Card(
+                      elevation: 30,
                       child: ListTile(
                           title: FlatButton.icon(
                               onPressed: null,
@@ -194,6 +183,14 @@ class _AdminState extends State<Admin> {
               leading: Icon(Icons.category),
               title: Text("Category list"),
               onTap: () {},
+            ),
+            Divider(),
+            ListTile(
+              leading: Icon(Icons.exit_to_app_rounded),
+              title: Text("Log out"),
+              onTap: () {
+                user.signOut();
+              },
             ),
           ],
         );

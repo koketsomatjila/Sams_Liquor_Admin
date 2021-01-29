@@ -82,65 +82,67 @@ class _AddProductState extends State<AddProduct> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                "Upload pictures of product",
+                "Upload image of product",
                 style:
                     TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
               ),
             ),
             Row(
               children: [
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: OutlineButton(
-                      onPressed: () {
+                Padding(
+                  padding: const EdgeInsets.all(18.0),
+                  child: OutlineButton(
+                    onPressed: () {
+                      // ignore: deprecated_member_use
+                      _selectImage(
                         // ignore: deprecated_member_use
-                        _selectImage(
-                          ImagePicker.pickImage(source: ImageSource.gallery),
-                        );
-                      },
-                      child: _displayChild1(),
-                      borderSide: BorderSide(
-                        color: Colors.grey.withOpacity(0.7),
-                        width: 2,
-                      ),
+                        ImagePicker.pickImage(source: ImageSource.gallery),
+                      );
+                    },
+                    child: _displayChild1(),
+                    borderSide: BorderSide(
+                      color: Colors.grey.withOpacity(0.7),
+                      width: 2,
                     ),
                   ),
                 ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: OutlineButton(
-                      onPressed: () {
-                        selectImage(
-                            ImagePicker.pickImage(source: ImageSource.gallery),
-                            2);
-                      },
-                      child: _displayChild2(),
-                      borderSide: BorderSide(
-                        color: Colors.grey.withOpacity(0.7),
-                        width: 2,
-                      ),
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: OutlineButton(
-                      onPressed: () {
-                        selectImage(
-                            ImagePicker.pickImage(source: ImageSource.gallery),
-                            3);
-                      },
-                      child: _displayChild3(),
-                      borderSide: BorderSide(
-                        color: Colors.grey.withOpacity(0.7),
-                        width: 2,
-                      ),
-                    ),
-                  ),
-                ),
+
+                // Expanded(
+                //   child: Padding(
+                //     padding: const EdgeInsets.all(8.0),
+                //     child: OutlineButton(
+                //       onPressed: () {
+                //         selectImage(
+                //             // ignore: deprecated_member_use
+                //             ImagePicker.pickImage(source: ImageSource.gallery),
+                //             2);
+                //       },
+                //       child: _displayChild2(),
+                //       borderSide: BorderSide(
+                //         color: Colors.grey.withOpacity(0.7),
+                //         width: 2,
+                //       ),
+                //     ),
+                //   ),
+                // ),
+                // Expanded(
+                //   child: Padding(
+                //     padding: const EdgeInsets.all(8.0),
+                //     child: OutlineButton(
+                //       onPressed: () {
+                //         selectImage(
+                //             // ignore: deprecated_member_use
+                //             ImagePicker.pickImage(source: ImageSource.gallery),
+                //             3);
+                //       },
+                //       child: _displayChild3(),
+                //       borderSide: BorderSide(
+                //         color: Colors.grey.withOpacity(0.7),
+                //         width: 2,
+                //       ),
+                //     ),
+                //   ),
+                // ),
               ],
             ),
 
@@ -295,7 +297,7 @@ class _AddProductState extends State<AddProduct> {
   Widget _displayChild1() {
     if (_image1 == null) {
       return Padding(
-        padding: const EdgeInsets.fromLTRB(8, 62, 8, 62),
+        padding: const EdgeInsets.fromLTRB(38, 62, 38, 62),
         child: Icon(
           Icons.add,
           color: Colors.grey,
@@ -309,38 +311,38 @@ class _AddProductState extends State<AddProduct> {
     }
   }
 
-  Widget _displayChild2() {
-    if (_image2 == null) {
-      return Padding(
-        padding: const EdgeInsets.fromLTRB(8, 62, 8, 62),
-        child: Icon(
-          Icons.add,
-          color: Colors.grey,
-        ),
-      );
-    } else {
-      return Image.file(
-        _image2,
-        width: double.infinity,
-      );
-    }
-  }
+  // Widget _displayChild2() {
+  //   if (_image2 == null) {
+  //     return Padding(
+  //       padding: const EdgeInsets.fromLTRB(8, 62, 8, 62),
+  //       child: Icon(
+  //         Icons.add,
+  //         color: Colors.grey,
+  //       ),
+  //     );
+  //   } else {
+  //     return Image.file(
+  //       _image2,
+  //       width: double.infinity,
+  //     );
+  //   }
+  // }
 
-  Widget _displayChild3() {
-    if (_image3 == null) {
-      return Padding(
-        padding: const EdgeInsets.fromLTRB(8, 62, 8, 62),
-        child: Icon(
-          Icons.add,
-          color: Colors.grey,
-        ),
-      );
-    } else {
-      return Image.file(
-        _image3,
-      );
-    }
-  }
+  // Widget _displayChild3() {
+  //   if (_image3 == null) {
+  //     return Padding(
+  //       padding: const EdgeInsets.fromLTRB(8, 62, 8, 62),
+  //       child: Icon(
+  //         Icons.add,
+  //         color: Colors.grey,
+  //       ),
+  //     );
+  //   } else {
+  //     return Image.file(
+  //       _image3,
+  //     );
+  //   }
+  // }
 
   Future<void> validateAndUpload() async {
     if (_formKey.currentState.validate()) {
