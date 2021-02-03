@@ -8,8 +8,9 @@ class ProductService {
   void uploadProduct(
       {String productName,
       String category,
+      String picture,
       int quantity,
-      List images,
+      // List images,
       double price}) {
     var id = Uuid();
     String productId = id.v1();
@@ -20,6 +21,8 @@ class ProductService {
       'Category': category,
       'Quantity': quantity,
       'Price': price,
+      'Picture': picture,
+      // 'Image': images,
     });
   }
 }

@@ -9,7 +9,7 @@ import 'package:sams_liquor_admin/Screens/Admin.dart';
 import '../Database/Category.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:flushbar/flushbar.dart';
+// import 'package:flushbar/flushbar.dart';
 
 class AddProduct extends StatefulWidget {
   @override
@@ -28,8 +28,6 @@ class _AddProductState extends State<AddProduct> {
       <DropdownMenuItem<String>>[];
   String _currentCategory;
   File _image1;
-  File _image2;
-  File _image3;
 
   @override
   // ignore: must_call_super
@@ -87,63 +85,24 @@ class _AddProductState extends State<AddProduct> {
                     TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
               ),
             ),
-            Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(18.0),
-                  child: OutlineButton(
-                    onPressed: () {
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: OutlineButton(
+                  onPressed: () {
+                    // ignore: deprecated_member_use
+                    _selectImage(
                       // ignore: deprecated_member_use
-                      _selectImage(
-                        // ignore: deprecated_member_use
-                        ImagePicker.pickImage(source: ImageSource.gallery),
-                      );
-                    },
-                    child: _displayChild1(),
-                    borderSide: BorderSide(
-                      color: Colors.grey.withOpacity(0.7),
-                      width: 2,
-                    ),
+                      ImagePicker.pickImage(source: ImageSource.gallery),
+                    );
+                  },
+                  child: _displayChild1(),
+                  borderSide: BorderSide(
+                    color: Colors.grey.withOpacity(0.7),
+                    width: 2,
                   ),
                 ),
-
-                // Expanded(
-                //   child: Padding(
-                //     padding: const EdgeInsets.all(8.0),
-                //     child: OutlineButton(
-                //       onPressed: () {
-                //         selectImage(
-                //             // ignore: deprecated_member_use
-                //             ImagePicker.pickImage(source: ImageSource.gallery),
-                //             2);
-                //       },
-                //       child: _displayChild2(),
-                //       borderSide: BorderSide(
-                //         color: Colors.grey.withOpacity(0.7),
-                //         width: 2,
-                //       ),
-                //     ),
-                //   ),
-                // ),
-                // Expanded(
-                //   child: Padding(
-                //     padding: const EdgeInsets.all(8.0),
-                //     child: OutlineButton(
-                //       onPressed: () {
-                //         selectImage(
-                //             // ignore: deprecated_member_use
-                //             ImagePicker.pickImage(source: ImageSource.gallery),
-                //             3);
-                //       },
-                //       child: _displayChild3(),
-                //       borderSide: BorderSide(
-                //         color: Colors.grey.withOpacity(0.7),
-                //         width: 2,
-                //       ),
-                //     ),
-                //   ),
-                // ),
-              ],
+              ),
             ),
 
             //Form
@@ -250,6 +209,7 @@ class _AddProductState extends State<AddProduct> {
                       textColor: Colors.white,
                       onPressed: () {
                         validateAndUpload();
+                        _formKey.currentState.dispose();
                       },
                     ),
                   ),
@@ -285,12 +245,6 @@ class _AddProductState extends State<AddProduct> {
       case 1:
         setState(() => _image1 = tempImg);
         break;
-      case 2:
-        setState(() => _image2 = tempImg);
-        break;
-      case 3:
-        setState(() => _image3 = tempImg);
-        break;
     }
   }
 
@@ -311,82 +265,34 @@ class _AddProductState extends State<AddProduct> {
     }
   }
 
-  // Widget _displayChild2() {
-  //   if (_image2 == null) {
-  //     return Padding(
-  //       padding: const EdgeInsets.fromLTRB(8, 62, 8, 62),
-  //       child: Icon(
-  //         Icons.add,
-  //         color: Colors.grey,
-  //       ),
-  //     );
-  //   } else {
-  //     return Image.file(
-  //       _image2,
-  //       width: double.infinity,
-  //     );
-  //   }
-  // }
-
-  // Widget _displayChild3() {
-  //   if (_image3 == null) {
-  //     return Padding(
-  //       padding: const EdgeInsets.fromLTRB(8, 62, 8, 62),
-  //       child: Icon(
-  //         Icons.add,
-  //         color: Colors.grey,
-  //       ),
-  //     );
-  //   } else {
-  //     return Image.file(
-  //       _image3,
-  //     );
-  //   }
-  // }
-
   Future<void> validateAndUpload() async {
     if (_formKey.currentState.validate()) {
-      if (_image1 != null && _image2 != null && _image3 != null) {
-        String imageUrl1;
-        String imageUrl2;
-        String imageUrl3;
+      if (_image1 != null) {
+        String picUrl1;
+
         final FirebaseStorage storage = FirebaseStorage.instance;
         final String picture1 =
             "1${DateTime.now().millisecondsSinceEpoch.toString()}.jpg";
         UploadTask task1 = storage.ref().child(picture1).putFile(_image1);
-        final String picture2 =
-            "2${DateTime.now().millisecondsSinceEpoch.toString()}.jpg";
-        UploadTask task2 = storage.ref().child(picture2).putFile(_image2);
-        final String picture3 =
-            "3${DateTime.now().millisecondsSinceEpoch.toString()}.jpg";
-        UploadTask task3 = storage.ref().child(picture3).putFile(_image3);
 
         TaskSnapshot snapshot1 = await task1.then((snapshot1) => snapshot1);
-        TaskSnapshot snapshot2 = await task2.then((snapshot2) => snapshot2);
 
-        task3.then((snapshot3) async {
-          imageUrl1 = await snapshot1.ref.getDownloadURL();
-          imageUrl2 = await snapshot2.ref.getDownloadURL();
-          imageUrl3 = await snapshot3.ref.getDownloadURL();
-          List<String> imageList = [imageUrl1, imageUrl2, imageUrl3];
+        task1.then((snapshot1) async {
+          picUrl1 = await snapshot1.ref.getDownloadURL();
+
+          // Picture<String> picture1 = [picUrl1];
 
           productService.uploadProduct(
               productName: productNameController.text,
               price: double.parse(productPriceController.text),
-              images: imageList,
+              // images: imageList,
+              picture: picture1,
               category: _currentCategory,
               quantity: int.parse(productQuantityController.text));
-          _formKey.currentState.reset();
 
-          Flushbar(
-            flushbarPosition: FlushbarPosition.BOTTOM,
-            message: "Product Added Successfully",
-          );
-
-          // Fluttertoast.showToast(msg: "Product Added Successfully");
+          Fluttertoast.showToast(msg: "Product Added Successfully");
         });
       } else {
-        // setState(() => isLoading = false);
         Fluttertoast.showToast(msg: "all images must be provided");
       }
     }
