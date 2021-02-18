@@ -33,13 +33,13 @@ class Product {
   bool get featured => _featured;
 
   Product.fromSnapshot(DocumentSnapshot snapshot) {
-    _category = snapshot.get(CATEGORY);
-    _id = snapshot.get(ID);
-    _name = snapshot.get(NAME);
-    _picture = snapshot.get(PICTURE);
-    _price = snapshot.get(PRICE);
-    _quantity = snapshot.get(QUANTITY);
-    _sale = snapshot.get(SALE);
-    _featured = snapshot.get(FEATURED);
+    _category = snapshot.data()[CATEGORY];
+    _id = snapshot.data()[ID];
+    _name = snapshot.data()[NAME];
+    _picture = snapshot.data()[PICTURE];
+    _price = snapshot.data()[PRICE];
+    _quantity = snapshot.data()[QUANTITY];
+    _sale = snapshot.data()[SALE];
+    _featured = snapshot.data()[FEATURED];
   }
 }

@@ -159,9 +159,7 @@ class _LogInState extends State<LogIn> {
                                 child: MaterialButton(
                                   onPressed: () async {
                                     if (_formKey.currentState.validate()) {
-                                      if (!await user.signIn(
-                                          _emailTextController.text,
-                                          _passwordTextController.text))
+                                      if (!await user.signIn())
                                         // ignore: deprecated_member_use
                                         _key.currentState.showSnackBar(SnackBar(
                                             content: Text('Signed In Failed')));

@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:provider/provider.dart';
 import 'package:sams_liquor_admin/Database/Products.dart';
 import 'package:sams_liquor_admin/Screens/Admin.dart';
 import '../Database/Category.dart';
@@ -28,6 +29,7 @@ class _AddProductState extends State<AddProduct> {
       <DropdownMenuItem<String>>[];
   String _currentCategory;
   File _image1;
+  bool _featured = false;
 
   @override
   // ignore: must_call_super
@@ -127,8 +129,8 @@ class _AddProductState extends State<AddProduct> {
                 validator: (value) {
                   if (value.isEmpty) {
                     return "You must enter a product name";
-                  } else if (value.length > 10) {
-                    return "Product name can't be more than 10 characters";
+                  } else if (value.length > 100) {
+                    return "Product name can't be more than 100 characters";
                   }
                   return null;
                 },
@@ -168,6 +170,18 @@ class _AddProductState extends State<AddProduct> {
                 },
               ),
             ),
+            Padding(
+                padding: const EdgeInsets.all(8),
+                child: CheckboxListTile(
+                  title: Text("Featured Item"),
+                  controlAffinity: ListTileControlAffinity.leading,
+                  value: _featured,
+                  onChanged: (bool value) {
+                    setState(() {
+                      _featured = value;
+                    });
+                  },
+                )),
             Divider(
               color: Colors.transparent,
             ),
@@ -209,7 +223,8 @@ class _AddProductState extends State<AddProduct> {
                       textColor: Colors.white,
                       onPressed: () {
                         validateAndUpload();
-                        _formKey.currentState.dispose();
+
+                        // _formKey.currentState.dispose();
                       },
                     ),
                   ),
@@ -280,13 +295,11 @@ class _AddProductState extends State<AddProduct> {
         task1.then((snapshot1) async {
           picUrl1 = await snapshot1.ref.getDownloadURL();
 
-          // Picture<String> picture1 = [picUrl1];
-
           productService.uploadProduct(
-              productName: productNameController.text,
+              name: productNameController.text,
               price: double.parse(productPriceController.text),
-              // images: imageList,
-              picture: picture1,
+              featured: _featured,
+              picture: picUrl1,
               category: _currentCategory,
               quantity: int.parse(productQuantityController.text));
 
